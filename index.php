@@ -33,14 +33,31 @@ spl_autoload_register(function($class_name){
     require_once $file_path;
 });
 
+// Register Routes
 Router::get('/', 'home');
-Router::get('/restaurant', 'restaurant');
-Router::post('/create_user', 'create_user');
 
-var_dump(Router::$get_routes);
-var_dump(Router::$post_routes);
+Router::redirect();
 
 
-// /home => pages/home.php METHOD:get
-// /restaurant => pages/restaurant.php
-// /klasjflasjlkl => pages/404.php
+// MVC Explained:
+    // M: Model
+    // V: View
+    // C: Controller
+// Display student (User) marks average
+
+// Regullar 
+    // We create one class:
+        // it gets data from data base
+        // it gets the average of the students marks (sum(student_marks/quantity));
+        // it displays the student marks. 
+// MVC design pattern
+    // We create three classes:
+        // Controller class: use Model class to get student marks
+        // Model class: gets student marks. 
+        // Controller class: calculate the average.
+        // Contorller class: use View class to display the average.
+        // View class: display the average.
+
+// Singlton design pattern
+    // I create one instence of the DB (connection) and I keep getting data based on this connection. 
+

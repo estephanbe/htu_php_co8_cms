@@ -9,7 +9,6 @@ use Exception;
 trait Tests {
 
     protected static function test_file_exists($file){
-
         try {
             if(!file_exists($file)){
                 throw new \Exception("The following file was not found: $file");
