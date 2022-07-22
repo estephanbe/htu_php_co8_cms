@@ -20,4 +20,17 @@ trait Tests {
 
         return true;
     }
+
+    protected static function test($testing_expression, $error_msg){
+        try {
+            if(!$testing_expression){
+                throw new \Exception($error_msg);
+            }
+        } catch (\Exception $error) {
+            echo "<table>" . $error->xdebug_message . "</table>";
+            die;
+        }
+
+        return true;
+    }
 }
