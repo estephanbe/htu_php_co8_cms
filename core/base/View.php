@@ -11,8 +11,9 @@ final class View
 
     private static $views_path;
 
-    function __construct($view)
+    function __construct($view, $data = [])
     {
+        $data = (object) $data;
         // $view = 'users.list'
         self::$views_path = dirname(__DIR__, 2) . "/resources/views";
         $paths_arr = explode('.', $view);
