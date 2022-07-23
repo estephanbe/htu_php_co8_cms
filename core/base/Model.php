@@ -13,7 +13,7 @@ class Model
 
     use Tests;
     protected $connection;
-    protected $table;
+    protected $table = null;
     public $data = [];
     // Open connection
     // Manipulate DB (CRUD Ops)
@@ -113,6 +113,10 @@ class Model
 
     function first(){
         return !empty($this->data) ? $this->data[0] : null;
+    }
+
+    function count(){
+        return count($this->data);
     }
 
 

@@ -41,6 +41,11 @@ Router::get('/', 'home');
 
 // Adminstrating Routes
 Router::get('/admin', 'admin');
+Router::get('/admin/news', 'news');
+Router::get('/admin/tags', 'tags');
+Router::get('/admin/users', 'users');
+
+Router::post('/admin/new/delete', 'deleteuser');
 
 Router::redirect();
 

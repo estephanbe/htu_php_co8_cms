@@ -24,6 +24,7 @@ class Collection {
     }
 
     private function create_schema($query_result){
+        
         // Get columns names.
         foreach($query_result->fetch_fields() as $field){
             // fill the $this->columns with the columns name
