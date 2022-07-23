@@ -38,6 +38,17 @@ final class View
 
     static function get_layout($layout_name)
     {
-        require_once self::$views_path . "/partials/$layout_name.php";
+        if(isset($_SESSION['admin'])){
+            if($_SESSION['admin']){
+                require_once self::$views_path . "/partials/$layout_name-admin.php";
+            } else {
+                require_once self::$views_path . "/partials/$layout_name.php";
+            }
+        } else {
+            require_once self::$views_path . "/partials/$layout_name.php";
+        }
+        
+
+        
     }
 }

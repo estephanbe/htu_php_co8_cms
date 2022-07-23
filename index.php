@@ -1,5 +1,5 @@
 <?php 
-
+session_start();
 // Routing using procedural programming..
 // require_once './depreciated/procedural_router.php';
 
@@ -34,7 +34,13 @@ spl_autoload_register(function($class_name){
 });
 
 // Register Routes
+
+// Public Routes
 Router::get('/', 'home');
+
+
+// Adminstrating Routes
+Router::get('/admin', 'admin');
 
 Router::redirect();
 
