@@ -7,7 +7,7 @@ namespace Core\Controllers;
 use Core\Base\Controller;
 use Core\Base\View;
 use Core\Models\Option;
-use Core\Models\User;
+use Core\Models\Post;
 
 class Home extends Controller{
     // Handle the "/" user request.
@@ -15,13 +15,22 @@ class Home extends Controller{
     // get the view.
 
     public function render() : View {
-        $option = new Option();
-        $testing_option = $option
-                                ->where('name', 'not_testing_option')
-                                ->all();
-        var_dump($testing_option);
-        return $this->view('homepage');
+        return $this->view($this->view, $this->data);
     }
+
+    public function list(){
+        $option = new Option();
+        $news = new Post();
+
+        $this->view = 'homepage';
+        $this->data['options'] = (object) [
+            'title' => $option->get_option('site_title'),
+            'slogan' => $option->get_option('site_slogan')
+        ];
+        $this->data['news'] = $news->get_all();
+    }
+
+    
 
 
 }

@@ -18,7 +18,7 @@ class Admin extends Controller
 
     public function render(): View
     {
-        $_SESSION['admin'] = true;
+        self::set_admin();
 
         // get site title
         $option = new Option();
@@ -47,5 +47,10 @@ class Admin extends Controller
             'news_count' => $news_count,
             'admin_posts' => $news_of_user1
         ]);
+    }
+
+    function __destruct()
+    {
+        self::unset_admin();
     }
 }

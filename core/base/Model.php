@@ -70,6 +70,7 @@ class Model
     // Create 
     function insert($value_arr)
     {
+        
         $columns = '';
         $values = '';
         foreach ($value_arr as $column => $column_value) {
@@ -91,8 +92,9 @@ class Model
             $col_val .= "$column='$column_value', ";
         }
         $col_val = rtrim($col_val, ", ");
-
+        
         $query = "UPDATE $this->table SET $col_val WHERE id=$id;";
+
         return $this->connection->query($query);
     }
 

@@ -4,6 +4,7 @@ session_start();
 // require_once './depreciated/procedural_router.php';
 
 require_once "./config.php";
+require_once "./functions.php";
 
 use Core\Helpers\Date;
 use Core\Router;
@@ -36,16 +37,44 @@ spl_autoload_register(function($class_name){
 // Register Routes
 
 // Public Routes
-Router::get('/', 'home');
+Router::get('/', 'home.list');
 
 
 // Adminstrating Routes
 Router::get('/admin', 'admin');
-Router::get('/admin/news', 'news');
-Router::get('/admin/tags', 'tags');
-Router::get('/admin/users', 'users');
 
-Router::post('/admin/new/delete', 'deleteuser');
+Router::get('/admin/news', 'news.list');
+Router::get('/admin/news/single', 'news.single');
+Router::get('/admin/news/add', 'news.add');
+Router::post('/admin/news/store', 'news.store');
+Router::get('/admin/news/edit', 'news.edit');
+Router::post('/admin/news/update', 'news.update');
+Router::post('/admin/news/delete', 'news.delete');
+
+Router::get('/admin/tags', 'tags.list');
+Router::get('/admin/tags/single', 'tags.single');
+Router::get('/admin/tags/add', 'tags.add');
+Router::post('/admin/tags/store', 'tags.store');
+Router::get('/admin/tags/edit', 'tags.edit');
+Router::post('/admin/tags/update', 'tags.update');
+Router::post('/admin/tags/delete', 'tags.delete');
+
+Router::get('/admin/users', 'users.list');
+Router::get('/admin/users/single', 'users.single');
+Router::get('/admin/users/add', 'users.add');
+Router::post('/admin/users/store', 'users.store');
+Router::get('/admin/users/edit', 'users.edit');
+Router::post('/admin/users/update', 'users.update');
+Router::post('/admin/users/delete', 'users.delete');
+
+Router::get('/admin/settings', 'settings.list');
+Router::get('/admin/settings/edit', 'settings.edit');
+Router::post('/admin/settings/update', 'settings.update');
+
+Router::get('/admin/profile', 'profile.list');
+Router::get('/admin/profile/edit', 'profile.edit');
+Router::post('/admin/profile/update', 'profile.update');
+
 
 Router::redirect();
 

@@ -4,7 +4,10 @@
  */
 namespace Core;
 
+use Core\Controllers\News;
 use Core\Helpers\Tests;
+
+
 
 class Router {
 
@@ -16,6 +19,8 @@ class Router {
     public static function redirect(){
 
         $request = $_SERVER['REQUEST_URI'];
+        $request = explode('?', $request)[0];
+        
         $routes = [];
 
         switch ($_SERVER['REQUEST_METHOD']){
@@ -33,8 +38,12 @@ class Router {
         }
 
         $controller_namespace = "Core\\Controllers\\"; // define the class namespace. 
-        $controller_name = $controller_namespace . ucfirst(strtolower($routes[$request])); // Concatinate name space with the class controller name. but before that, lowercase the class name, and convert the first letter to uppercase. 
+        $controller_methods = explode('.', $routes[$request]);
+        $controller_name = $controller_namespace . ucfirst(strtolower($controller_methods[0])); // Concatinate name space with the class controller name. but before that, lowercase the class name, and convert the first letter to uppercase. 
         $controller = new $controller_name; // create new instance of the requested class. 
+        if(count($controller_methods) == 2){
+            call_user_func([$controller, $controller_methods[1]]);
+        }
         $controller->render();
     }
     
