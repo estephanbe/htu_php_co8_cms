@@ -1,6 +1,5 @@
 <div class="container my-5">
-    <h1 class="text-center"><?= $data->options->title; ?></h1>
-    <p class="text-center"><?= $data->options->slogan; ?></p>
+    <h1 class="text-center">News related to "<?= $data->tag->name; ?>"</h1>
     <hr>
 
 
@@ -22,7 +21,3 @@
 
         ?>
     </div>
-
-
-
-</div>

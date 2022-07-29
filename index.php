@@ -37,7 +37,10 @@ spl_autoload_register(function($class_name){
 // Register Routes
 
 // Public Routes
-Router::get('/', 'home.list');
+Router::get('/', 'front.list');
+Router::get('/single', 'front.single');
+Router::get('/tag_cloud', 'front.tags');
+Router::get('/news_tags', 'front.news_tags');
 
 
 // Adminstrating Routes

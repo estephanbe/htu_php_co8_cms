@@ -39,6 +39,16 @@
         <strong class="d-block">Updated At</strong>
         <?= $data->item->updated_at ?>
     </div>
+    <div class="my-3">
+        <strong class="d-block">Tags:</strong>
+        <?php 
+        $tags = '';
+        foreach ($data->tags as $tag) {
+            $tags .= $tag->name . ", ";
+        }
+        echo rtrim($tags, ', ');
+        ?>
+    </div>
 
 
 

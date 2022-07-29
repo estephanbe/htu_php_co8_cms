@@ -1,3 +1,12 @@
+<?php
+
+use Core\Models\User;
+
+$user = new User();
+$current_user = $user->get_by_id(1);
+
+?>
+
 <!doctype html>
 <html lang="en">
 
@@ -47,8 +56,11 @@
                         <hr>
                         <div class="dropdown pb-4">
                             <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                                <img src="https://github.com/mdo.png" alt="hugenerd" width="30" height="30" class="rounded-circle">
-                                <span class="d-none d-sm-inline mx-1">username</span>
+                                <img src="<?php
+                                            $pp_path = "/resources/photos/";
+                                            echo !empty($current_user->profile_photo_id) ? $pp_path . $current_user->profile_photo_id : $pp_path . "pp-default.jpeg";
+                                            ?>" alt="hugenerd" width="30" height="30" class="rounded-circle">
+                                <span class="d-none d-sm-inline mx-1"><?= $current_user->username ?></span>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
                                 <li><a class="dropdown-item" href="/admin/profile">Profile</a></li>

@@ -15,6 +15,7 @@ class Model
     protected $connection;
     protected $table = null;
     public $data = [];
+    public $last_insert_id;
     // Open connection
     // Manipulate DB (CRUD Ops)
     // Use DB data
@@ -81,8 +82,9 @@ class Model
         $values = rtrim($values, ", ");
         
         $query = "INSERT INTO $this->table ($columns) VALUES ($values);";
-
-        return $this->connection->query($query);
+        $excution = $this->connection->query($query);
+        $this->last_insert_id = (int) $this->connection->insert_id;
+        return $excution;
     }
 
     // Update

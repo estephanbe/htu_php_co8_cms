@@ -18,6 +18,28 @@
             <label for="newsExcerpt" class="form-label">Excerpt:</label>
             <input type="text" name="excerpt" class="form-control" id="newsExcerpt" value="<?= $data->item->post_excerpt ?>">
         </div>
+        <div class="mb-3">
+            <label for="newTags" class="form-label">News Tags:</label>
+            <select id="newTags" class="form-select" multiple aria-label="multiple select" name="news_tags[]">
+                <?php
+                $switch_tag = false;
+                foreach ($data->all_tags as $tag) {
+                    foreach ($data->selected_tags as $selected_tag) {
+                        if($selected_tag->id == $tag->id){
+                            echo "<option selected value=\"$tag->id\">$tag->name</option>";
+                            $switch_tag = true;
+                        }
+                        continue;
+                    }
+
+                    if(!$switch_tag){
+                        echo "<option value=\"$tag->id\">$tag->name</option>";
+                    }
+                    $switch_tag = false;
+                }
+                ?>
+            </select>
+        </div>
         <button type="submit" class="btn btn-warning">Update</button>
     </form>
 

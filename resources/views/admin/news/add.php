@@ -15,6 +15,16 @@
             <label for="newsExcerpt" class="form-label">Excerpt:</label>
             <input type="text" name="excerpt" class="form-control" id="newsExcerpt">
         </div>
+        <div class="mb-3">
+            <label for="newTags" class="form-label">News Tags:</label>
+            <select id="newTags" class="form-select" multiple aria-label="multiple select" name="news_tags[]">
+                <?php
+                foreach ($data->tags as $tag) {
+                    echo "<option value=\"$tag->id\">$tag->name</option>";
+                }
+                ?>
+            </select>
+        </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 

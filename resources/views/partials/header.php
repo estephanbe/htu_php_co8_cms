@@ -24,6 +24,9 @@
           <li class="nav-item">
             <a class="nav-link" aria-current="page" href="/admin">Admin</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="/tag_cloud">Tags Cloud</a>
+          </li>
           <!-- <li class="nav-item">
             <a class="nav-link" href="#">Link</a>
           </li> -->

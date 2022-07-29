@@ -45,12 +45,22 @@ class Profile extends Controller
     public function update(){
         self::set_admin();
         $users = new User();
+        $moved_file = false;
+        $file_name = null;
+        $file_ext = null;
+        if(!empty($_FILES)){
+            $file_name = "pp-" . $_POST['username'];
+            $file_ext = explode('/', $_FILES['profile_image']['type'])[1];
+            $file_dir = dirname(__DIR__, 2) . "/resources/photos/$file_name.$file_ext";
+            $moved_file = move_uploaded_file($_FILES['profile_image']['tmp_name'], $file_dir);
+        }
         $users->update(1, [
             'username' => $_POST['username'],
             'email' => $_POST['email'],
             'password' => $_POST['password'],
             'display_name' => $_POST['display_name'],
-            'roles' => 'admin'
+            'roles' => 'admin',
+            'profile_photo_id' => $moved_file ? "$file_name.$file_ext" : null
         ]);
         redirect('/admin/profile');
     }
