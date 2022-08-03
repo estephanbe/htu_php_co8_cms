@@ -6,9 +6,7 @@ session_start();
 require_once "./config.php";
 require_once "./functions.php";
 
-use Core\Helpers\Date;
 use Core\Router;
-use Core\Menu;
 
 spl_autoload_register(function($class_name){
 
