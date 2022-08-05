@@ -1,5 +1,5 @@
 <div class="container my-5">
-    <h1 class="text-center"><?= $data->item->post_title; ?></h1>
+    <h1 class="text-center"><?= htmlspecialchars($data->item->post_title) ?></h1>
     <hr>
 
     <div class="my-3">
@@ -12,7 +12,7 @@
     </div>
     <div class="my-3">
         <strong class="d-block">Content</strong>
-        <?= $data->item->post_content ?>
+        <?= htmlspecialchars($data->item->post_content) ?>
     </div>
     <?php
     if (!empty($data->tags)) { ?>
@@ -21,7 +21,7 @@
             <?php
             $tags = '';
             foreach ($data->tags as $tag) {
-                $tags .= $tag->name . ", ";
+                $tags .= htmlspecialchars($tag->name) . ", ";
             }
             echo rtrim($tags, ', ');
             ?>

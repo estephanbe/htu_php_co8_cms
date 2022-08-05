@@ -18,6 +18,9 @@ class Admin extends Controller
 
     public function render(): View
     {
+        if(!$this->auth()){
+            redirect('/login');
+        }
         self::set_admin();
 
         // get site title

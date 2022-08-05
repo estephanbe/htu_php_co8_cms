@@ -1,5 +1,5 @@
 <div class="container text-left">
-    <h1 class="text-center"><?= $data->item->post_title ?></h1>
+    <h1 class="text-center"><?= htmlspecialchars($data->item->post_title) ?></h1>
     <hr>
     <div class="my-5 d-flex justify-content-end">
         <a href="/admin/news" class="mx-1 btn btn-primary btn-sm">
@@ -17,11 +17,11 @@
     </div>
     <div class="my-3">
         <strong class="d-block">Content</strong>
-        <?= $data->item->post_content ?>
+        <?= htmlspecialchars($data->item->post_content) ?>
     </div>
     <div class="my-3">
         <strong class="d-block">Excerpt</strong>
-        <?= $data->item->post_excerpt ?>
+        <?= htmlspecialchars($data->item->post_excerpt) ?>
     </div>
     <div class="my-3">
         <strong class="d-block">Author</strong>
@@ -44,7 +44,7 @@
         <?php 
         $tags = '';
         foreach ($data->tags as $tag) {
-            $tags .= $tag->name . ", ";
+            $tags .= htmlspecialchars($tag->name) . ", ";
         }
         echo rtrim($tags, ', ');
         ?>

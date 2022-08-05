@@ -38,7 +38,8 @@ class Front extends Controller{
         $selected_tags = [];
         $selected_news = $news->get_by_id($_GET['id']);
         $user = new User();
-        $selected_news->post_author = $user->get_by_id($selected_news->post_author)->display_name;
+        $user_ob = $user->get_by_id($selected_news->post_author);
+        $selected_news->post_author = !$user_ob ? "Deleted User" : $user_ob->display_name;
         $this->view = 'single';
         $this->data['item'] = $selected_news;
 

@@ -76,6 +76,8 @@ Router::get('/admin/profile', 'profile.list');
 Router::get('/admin/profile/edit', 'profile.edit');
 Router::post('/admin/profile/update', 'profile.update');
 
+Router::get('/login', 'login.form');
+Router::post('/login', 'login.authenticate');
 
 Router::redirect();
 

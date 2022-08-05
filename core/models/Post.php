@@ -19,14 +19,17 @@ class Post extends Model
     }
 
     function get_news_tags($news_id){
-        $query = "SELECT * FROM posts_tags WHERE post_id=$news_id";
-        $collection = new Collection($this->connection, $query);
+        $sql = "SELECT * FROM posts_tags WHERE post_id=?";
+        $query_result = $this->execute_by_id($sql, $news_id);
+        $collection = new Collection($query_result);
         return $collection->data;
     }
 
     function get_relations_based_on_tag($tag_id){
-        $query = "SELECT * FROM posts_tags WHERE tag_id=$tag_id";
-        $collection = new Collection($this->connection, $query);
+        $sql = "SELECT * FROM posts_tags WHERE tag_id=?";
+
+        $query_result = $this->execute_by_id($sql, $tag_id);
+        $collection = new Collection($query_result);
         return $collection->data;
     }
 

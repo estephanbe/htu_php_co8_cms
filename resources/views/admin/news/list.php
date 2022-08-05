@@ -20,7 +20,7 @@
         <tbody>
             <?php foreach ($data->news as $post) : ?>
                 <tr>
-                    <td><?= $post->post_title; ?></td>
+                    <td><?= htmlspecialchars($post->post_title) ?></td>
                     <td><?= $post->post_author; ?></td>
                     <td><?= $post->post_status; ?></td>
                     <td><?= $post->created_at; ?></td>

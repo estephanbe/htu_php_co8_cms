@@ -16,9 +16,8 @@ class Collection {
 
     public $data = [];
 
-    function __construct($connection, $query)
+    function __construct(\mysqli_result $result)
     {
-        $result = $connection->query($query);
         $this->create_schema($result);
         $this->fill_data($result);
     }

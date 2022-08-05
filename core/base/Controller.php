@@ -23,4 +23,14 @@ abstract class Controller {
         unset($_SESSION['admin']);
     }
 
+    protected function auth(){
+        $auth = false;
+        if(isset($_SESSION['user']->logged)){
+            if($_SESSION['user']->logged == true){
+                $auth = true;
+            }
+        }
+        return $auth;
+    }
+
 }

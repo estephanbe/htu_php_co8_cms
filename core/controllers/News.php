@@ -125,21 +125,22 @@ class News extends Controller
                     // delete from the relations table 
         // the left ids in the $_POST['news_tags'], will be added to the relations_table through a loop.
 
-        $updated_tags_arr = $_POST['news_tags'];
-        $current_relations = $news->get_news_tags($_POST['id']);
-        echo "before the loop: <br>";
-        var_dump($updated_tags_arr);
-        foreach ($current_relations as $key => $relation) {
-            if(in_array($relation->tag_id, $updated_tags_arr)){
-                unset($updated_tags_arr[$key]);
-            } else {
-                $news->delete_relation($relation->id);
+        if(isset($_POST['news_tags'])){
+            $updated_tags_arr = $_POST['news_tags'];
+            $current_relations = $news->get_news_tags($_POST['id']);
+            foreach ($current_relations as $key => $relation) {
+                if(in_array($relation->tag_id, $updated_tags_arr)){
+                    unset($updated_tags_arr[$key]);
+                } else {
+                    $news->delete_relation($relation->id);
+                }
+            }
+
+            foreach ($updated_tags_arr as $tag_id) {
+                $news->add_relation($_POST['id'], $tag_id);
             }
         }
-
-        foreach ($updated_tags_arr as $tag_id) {
-            $news->add_relation($_POST['id'], $tag_id);
-        }
+        
         redirect('/admin/news');
     }
 

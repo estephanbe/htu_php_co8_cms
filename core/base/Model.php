@@ -43,11 +43,19 @@ class Model
         $this->connection->close();
     }
 
+    protected function execute_by_id($sql, $id){
+        $query = $this->connection->prepare($sql);
+        $query->bind_param('i', $id);
+        $query->execute();
+        return $query->get_result();
+    }
+
     // Read all.
     function get_all()
     {
-        $query = "SELECT * FROM $this->table";
-        $collection = new Collection($this->connection, $query);
+        $query = $this->connection->prepare("SELECT * FROM $this->table");
+        $query->execute();
+        $collection = new Collection($query->get_result());
 
         return $collection->data;
     }
@@ -55,8 +63,12 @@ class Model
     // Read Single
     function get_by_id($id)
     {
-        $query = "SELECT * FROM $this->table WHERE id=$id;";
-        $collection = new Collection($this->connection, $query);
+        // Unsecure way of dealing with SQL statements:
+            // $query = "SELECT * FROM $this->table WHERE id=$id;";
+            // $result = $this->connection->query($query);
+        $query_result = $this->execute_by_id("SELECT * FROM $this->table WHERE id=?", $id);
+
+        $collection = new Collection($query_result);
 
         return !empty($collection->data) ? $collection->data[0] : null;
     }
@@ -64,40 +76,75 @@ class Model
     // Delete
     function delete($id)
     {
-        $query = "DELETE FROM $this->table WHERE id=$id;";
-        return $this->connection->query($query);
+        $sql = "DELETE FROM $this->table WHERE id=?";
+        return $this->execute_by_id($sql, $id);
     }
 
     // Create 
     function insert($value_arr)
     {
-        
         $columns = '';
         $values = '';
+        $bind_values_arr = [];
+        $bind_types = '';
         foreach ($value_arr as $column => $column_value) {
             $columns .= $column . ", ";
-            $values .= "'$column_value', ";
+            $values .= "?, ";
+
+            $bind_values_arr[] = $column_value;
+            switch($column){
+                case "id":
+                case "post_author":
+                case "post_id":
+                case "tag_id":
+                    $bind_types .= 'i';
+                    break;
+                default:
+                    $bind_types .= 's';
+            }
         }
         $columns = rtrim($columns, ", ");
         $values = rtrim($values, ", ");
         
-        $query = "INSERT INTO $this->table ($columns) VALUES ($values);";
-        $excution = $this->connection->query($query);
+        $sql = "INSERT INTO $this->table ($columns) VALUES ($values)";
+        $query = $this->connection->prepare($sql);
+        $query->bind_param($bind_types, ...$bind_values_arr);
+        $query->execute();
+        
         $this->last_insert_id = (int) $this->connection->insert_id;
-        return $excution;
+        return $this->last_insert_id;
     }
 
     // Update
     function update($id, $col_val_arr){
+        
         $col_val = '';
+        $bind_values_arr = [];
+        $bind_types = '';
         foreach ($col_val_arr as $column => $column_value) {
-            $col_val .= "$column='$column_value', ";
+            $col_val .= "$column=?, ";
+            $bind_values_arr[] = $column_value;
+            switch($column){
+                case "id":
+                case "post_author":
+                case "post_id":
+                case "tag_id":
+                    $bind_types .= 'i';
+                    break;
+                default:
+                    $bind_types .= 's';
+            }
         }
         $col_val = rtrim($col_val, ", ");
         
-        $query = "UPDATE $this->table SET $col_val WHERE id=$id;";
+        $sql = "UPDATE $this->table SET $col_val WHERE id=?";
+        $query = $this->connection->prepare($sql);
+        $bind_values_arr[] = $id;
+        $bind_types .= 'i';
 
-        return $this->connection->query($query);
+        $query->bind_param($bind_types, ...$bind_values_arr);
+
+        return $query->execute();
     }
 
     function custom_query($query){
@@ -105,8 +152,21 @@ class Model
     }
 
     function where($column, $value){
-        $query = "SELECT * FROM $this->table WHERE $column='$value';";
-        $collection = new Collection($this->connection, $query);
+        $sql = "SELECT * FROM $this->table WHERE $column=?";
+        $query = $this->connection->prepare($sql);
+        // integer columns: id, post_author, post_id, tag_id
+        switch($column){
+            case "id":
+            case "post_author":
+            case "post_id":
+            case "tag_id":
+                $query->bind_param('i', $value);
+                break;
+            default:
+                $query->bind_param('s', $value);
+        }
+        $query->execute();
+        $collection = new Collection($query->get_result());
         $this->data = $collection->data;
         return $this;
     }
