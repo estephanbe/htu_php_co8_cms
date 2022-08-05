@@ -3,9 +3,6 @@ session_start();
 // Routing using procedural programming..
 // require_once './depreciated/procedural_router.php';
 
-
-
-require_once "./vendor/autoload.php";
 require_once "./config.php";
 require_once "./functions.php";
 
@@ -22,7 +19,7 @@ spl_autoload_register(function($class_name){
     //     1 => string 'Router' (length=6)
     if($class_name[0] != 'Core')
         return;
-        
+
     foreach($class_name as $key => $value){
         // if $key == last_key in $class_name, don't strtolower. 
         if($key != array_key_last($class_name)){
@@ -36,10 +33,7 @@ spl_autoload_register(function($class_name){
 
     require_once $file_path;
 });
-$faker = Faker\Factory::create();
 
-var_dump($faker->name);
-die;
 
 // Register Routes
 
