@@ -24,25 +24,28 @@ class Profile extends Controller
     }
 
     public function list(){
+        $this->auth();
         self::set_admin();
 
         $users = new User();
         // please do not forget to do a validation if the item was not found, to redirect to 404.
         $this->view = 'admin.profile.list';
-        $this->data['item'] = $users->get_by_id(1); // will hard code it just for now
+        $this->data['item'] = $users->get_by_id($_SESSION['user']->user_id); // will hard code it just for now
     }
 
     public function edit(){
+        $this->auth();
         self::set_admin();
 
         // get site title
         $user = new User();
 
         $this->view = 'admin.profile.edit';
-        $this->data['item'] = $user->get_by_id(1);
+        $this->data['item'] = $user->get_by_id($_SESSION['user']->user_id);
     }
 
     public function update(){
+        $this->auth();
         self::set_admin();
         $users = new User();
         $moved_file = false;
@@ -54,7 +57,7 @@ class Profile extends Controller
             $file_dir = dirname(__DIR__, 2) . "/resources/photos/$file_name.$file_ext";
             $moved_file = move_uploaded_file($_FILES['profile_image']['tmp_name'], $file_dir);
         }
-        $users->update(1, [
+        $users->update($_SESSION['user']->user_id, [
             'username' => $_POST['username'],
             'email' => $_POST['email'],
             'password' => $_POST['password'],

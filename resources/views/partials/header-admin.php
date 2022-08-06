@@ -3,7 +3,7 @@
 use Core\Models\User;
 
 $user = new User();
-$current_user = $user->get_by_id(1);
+$current_user = $user->get_by_id($_SESSION['user']->user_id);
 
 ?>
 
@@ -38,21 +38,26 @@ $current_user = $user->get_by_id(1);
                                 <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">Dashboard</span>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="/admin/news" class="nav-link px-0">News</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/admin/tags" class="nav-link px-0">Tags</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/admin/users" class="nav-link px-0">Users</a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a href="/admin/settings" class="nav-link align-middle px-0">
-                                <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">Settings</span>
-                            </a>
-                        </li>
+                        <?php if(check_permission('admin') || check_permission('news_edit')): ?>
+                            <li class="nav-item">
+                                <a href="/admin/news" class="nav-link px-0">News</a>
+                            </li>
+                        <?php endif; ?>
+                        <?php if(check_permission('admin') || check_permission('tags_edit')): ?>
+                            <li class="nav-item">
+                                <a href="/admin/tags" class="nav-link px-0">Tags</a>
+                            </li>
+                        <?php endif; ?>
+                        <?php if(check_permission('admin')): ?>
+                            <li class="nav-item">
+                                <a href="/admin/users" class="nav-link px-0">Users</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/admin/settings" class="nav-link align-middle px-0">
+                                    <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">Settings</span>
+                                </a>
+                            </li>
+                        <?php endif; ?>
                         <hr>
                         <div class="dropdown pb-4">
                             <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -67,7 +72,11 @@ $current_user = $user->get_by_id(1);
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                <li><a class="dropdown-item" href="#">Sign out</a></li>
+                                <li>
+                                    <form action="/logout" method="POST" class="dropdown-item">
+                                        <button type="submit" class="btn btn-outline-light">Sign out</button>
+                                    </form>
+                                </li>
                             </ul>
                         </div>
                 </div>

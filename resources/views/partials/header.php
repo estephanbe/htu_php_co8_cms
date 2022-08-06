@@ -21,9 +21,11 @@
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="/">Home</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="/admin">Admin</a>
-          </li>
+          <?php if(isset($_SESSION['user']->logged) && $_SESSION['user']->logged == true){ ?>
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="/admin">Admin</a>
+            </li>
+          <?php } ?>
           <li class="nav-item">
             <a class="nav-link" aria-current="page" href="/tag_cloud">Tags Cloud</a>
           </li>

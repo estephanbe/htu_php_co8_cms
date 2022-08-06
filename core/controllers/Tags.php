@@ -13,6 +13,11 @@ use Core\Models\Tag;
 class Tags extends Controller
 {
 
+    public function __construct()
+    {
+        $this->authorize(['admin', 'tags_edit']);
+    }
+
     public function render(): View
     {
         return $this->view($this->view, $this->data);

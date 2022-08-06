@@ -26,6 +26,7 @@ class News extends Controller
     }
 
     public function list(){
+        $this->authorize(['admin', 'news_edit']);
         self::set_admin();
         $news = new Post();
         $all_news = $news->get_all();
@@ -41,6 +42,7 @@ class News extends Controller
     }
 
     public function single(){
+        $this->authorize(['admin', 'news_edit']);
         self::set_admin();
         $news = new Post();
         $tag = new Tag();
@@ -60,6 +62,7 @@ class News extends Controller
     }
 
     public function add(){
+        $this->authorize(['admin', 'news_edit']);
         self::set_admin();
         $tag = new Tag();
         $this->view = 'admin.news.add';
@@ -67,6 +70,7 @@ class News extends Controller
     }
 
     public function store(){
+        $this->authorize(['admin', 'news_edit']);
         self::set_admin();
         $news = new Post();
         $news_title = $_POST['title'];
@@ -87,6 +91,7 @@ class News extends Controller
     }
 
     public function edit(){
+        $this->authorize(['admin', 'news_edit']);
         self::set_admin();
         $news = new Post();
         $tag = new Tag();
@@ -105,6 +110,7 @@ class News extends Controller
     }
 
     public function update(){
+        $this->authorize(['admin', 'news_edit']);
         self::set_admin();
         $news = new Post();
         $news->update($_POST['id'], [
@@ -145,6 +151,7 @@ class News extends Controller
     }
 
     public function delete(){
+        $this->authorize(['admin', 'news_edit']);
         self::set_admin();
         $news = new Post();
         $news_id = $_POST['news_id'];

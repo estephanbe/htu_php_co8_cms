@@ -25,6 +25,7 @@ class Settings extends Controller
     }
 
     public function list(){
+        $this->authorize('admin');
         self::set_admin();
 
         // get site title
@@ -38,6 +39,7 @@ class Settings extends Controller
     }
 
     public function edit(){
+        $this->authorize('admin');
         self::set_admin();
 
         // get site title
@@ -51,6 +53,7 @@ class Settings extends Controller
     }
 
     public function update(){
+        $this->authorize('admin');
         $option = new Option();
         $options = $_POST;
         $site_title = $option->get_option_object('site_title');

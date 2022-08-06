@@ -25,6 +25,8 @@ class Users extends Controller
     }
 
     public function list(){
+        $this->auth(); 
+        $this->authorize('admin');
         self::set_admin();
         $users = new User();
         $all_users = $users->get_all();
@@ -34,6 +36,8 @@ class Users extends Controller
     }
 
     public function single(){
+        $this->auth(); 
+        $this->authorize('admin');
         self::set_admin();
         $users = new User();
         // please do not forget to do a validation if the item was not found, to redirect to 404.
@@ -42,17 +46,22 @@ class Users extends Controller
     }
 
     public function add(){
+        $this->auth(); 
+        $this->authorize('admin');
         self::set_admin();
         $this->view = 'admin.users.add';
     }
 
     public function store(){
+        $this->auth(); 
+        $this->authorize('admin');
         self::set_admin();
         $users = new User();
+        $hashed_password = password_hash($_POST['password'], PASSWORD_DEFAULT);
         $users->insert([
             'username' => $_POST['username'],
             'email' => $_POST['email'],
-            'password' => $_POST['password'],
+            'password' => $hashed_password,
             'display_name' => $_POST['display_name'],
             'roles' => 'admin'
         ]);
@@ -60,6 +69,8 @@ class Users extends Controller
     }
 
     public function edit(){
+        $this->auth(); 
+        $this->authorize('admin');
         self::set_admin();
         $users = new User();
         $this->view = 'admin.users.edit';
@@ -67,12 +78,15 @@ class Users extends Controller
     }
 
     public function update(){
+        $this->auth(); 
+        $this->authorize('admin');
         self::set_admin();
         $users = new User();
+        $hashed_password = password_hash($_POST['password'], PASSWORD_DEFAULT);
         $users->update($_POST['id'], [
             'username' => $_POST['username'],
             'email' => $_POST['email'],
-            'password' => $_POST['password'],
+            'password' => $hashed_password,
             'display_name' => $_POST['display_name'],
             'roles' => 'admin'
         ]);
@@ -80,6 +94,8 @@ class Users extends Controller
     }
 
     public function delete(){
+        $this->auth(); 
+        $this->authorize('admin');
         self::set_admin();
         $users = new User();
         $users->delete($_POST['user_id']);

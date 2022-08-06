@@ -3,7 +3,7 @@
 use Core\Models\User;
 
 $user = new User();
-$current_user = $user->get_by_id(1);
+$current_user = $user->get_by_id($_SESSION['user']->user_id);
 
 ?>
 <div class="container">

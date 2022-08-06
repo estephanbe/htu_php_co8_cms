@@ -1,5 +1,16 @@
 <div class="container my-5 w-50">
     <h1 class="text-center my-3">Login To Admin Dashboard</h1>
+
+    <?php if(isset($_SESSION['errors']) && !empty($_SESSION['errors'])){
+        $message = '';
+        if(in_array('unauthenticated_user', $_SESSION['errors'])){
+            $message = "Incorret Username or Password";
+        }
+        echo "<div class='alert alert-danger' role='alert'>
+                $message
+            </div>";
+    } ?>
+
     <form method="POST" action="/login">
         <!-- Email input -->
         <div class="form-outline mb-4">
@@ -14,15 +25,15 @@
         </div>
 
         <!-- 2 column grid layout for inline styling -->
-        <!-- <div class="row mb-4">
-            <div class="col d-flex justify-content-center"> -->
+        <div class="row mb-4">
+            <div class="col d-flex justify-content-center">
                 <!-- Checkbox -->
-                <!-- <div class="form-check">
+                <div class="form-check">
                     <input class="form-check-input" type="checkbox" name="remember_me" id="remember_me" checked />
                     <label class="form-check-label" for="remember_me"> Remember me </label>
                 </div>
             </div>
-        </div> -->
+        </div>
 
         <!-- Submit button -->
         <button type="submit" class="btn btn-primary btn-block mb-4">Sign in</button>
